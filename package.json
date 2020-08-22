@@ -1,0 +1,22 @@
+{
+  "name": "facebook-js-sdk",
+  "version": "0.0.1",
+  "description": "Simple JavaScript SDK to interact with Facebook API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sohaibilyas/facebook-js-sdk.git"
+  },
+  "author": "Sohaib Ilyas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sohaibilyas/facebook-js-sdk/issues"
+  },
+  "homepage": "https://github.com/sohaibilyas/facebook-js-sdk#readme",
+  "dependencies": {
+    "axios": "^0.20.0"
+  }
+}
