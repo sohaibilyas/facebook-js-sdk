@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require("axios").default;
 
 module.exports = class Facebook {
   config = {};
@@ -50,6 +50,7 @@ module.exports = class Facebook {
       )
       .then((response) => {
         this.accessToken = response.data.access_token;
+        console.log(this.accessToken);
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -80,6 +81,22 @@ module.exports = class Facebook {
 
     return axios.get(
       this.baseUrl + path + separator + "access_token=" + accessToken
+    );
+  }
+
+  post(path, options, accessToken) {
+    if (!accessToken) {
+      accessToken = this.accessToken;
+    }
+
+    var separator = "?";
+    if (path.includes("?")) {
+      separator = "&";
+    }
+
+    return axios.post(
+      this.baseUrl + path + separator + "access_token=" + accessToken,
+      options
     );
   }
 };
