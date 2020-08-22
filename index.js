@@ -99,4 +99,12 @@ module.exports = class Facebook {
       options
     );
   }
+
+  delete(path, accessToken) {
+    if (!accessToken) {
+      accessToken = this.accessToken;
+    }
+
+    return axios.delete(this.baseUrl + path + "?access_token=" + accessToken);
+  }
 };
