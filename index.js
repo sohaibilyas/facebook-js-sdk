@@ -36,25 +36,17 @@ module.exports = class Facebook {
   }
 
   callback(code) {
-    axios
-      .get(
-        this.baseUrl +
-          "/oauth/access_token?client_id=" +
-          this.config.appId +
-          "&client_secret=" +
-          this.config.appSecret +
-          "&redirect_uri=" +
-          this.config.redirectUrl +
-          "&code=" +
-          code
-      )
-      .then((response) => {
-        this.accessToken = response.data.access_token;
-        console.log(this.accessToken);
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-      });
+    return axios.get(
+      this.baseUrl +
+        "/oauth/access_token?client_id=" +
+        this.config.appId +
+        "&client_secret=" +
+        this.config.appSecret +
+        "&redirect_uri=" +
+        this.config.redirectUrl +
+        "&code=" +
+        code
+    );
   }
 
   getAccessToken() {
