@@ -7,7 +7,6 @@ npm install facebook-js-sdk
 ```
 
 ## Usage
-Using **require** keyword.
 ```js
 const express = require("express");
 const Facebook = require("facebook-js-sdk");
@@ -25,8 +24,9 @@ const facebook = new Facebook({
   graphVersion: "v20.0",
 });
 
-// default graphVersion is v20.0
+// default graphVersion is v20.0 and it's optional
 const facebook = new Facebook({
+  graphVersion: "v20.0",
   accessToken: "access-token-here"
 });
 
