@@ -22,7 +22,7 @@ import Facebook from "facebook-js-sdk";
 ```js
 const app = express();
 
-// step 1: initialize Facebook class with config
+// step 1: initialize Facebook class with config or accessToken
 
 const facebook = new Facebook({
   appId: "123456789987654321",
@@ -30,8 +30,6 @@ const facebook = new Facebook({
   redirectUrl: "http://localhost/callback",
   graphVersion: "v20.0",
 });
-
-OR
 
 // default graphVersion is v20.0
 const facebook = new Facebook({
@@ -114,7 +112,7 @@ npm test
 ## License
 MIT License
 
-Copyright (c) 2020 Sohaib Ilyas
+Copyright (c) 2024 Sohaib Ilyas
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
