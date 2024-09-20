@@ -1,5 +1,5 @@
 # Facebook JS SDK
-Simple JavaScript SDK to interact with Facebook API. This is my first npm package so any mistakes, let me know, thanks.
+Simple npm package to interact with Facebook API. This is my first npm package so any feedback is appreciated.
 
 ## Installation
 ```bash
