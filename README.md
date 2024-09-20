@@ -28,7 +28,14 @@ const facebook = new Facebook({
   appId: "123456789987654321",
   appSecret: "123456789abcdefgh987654321",
   redirectUrl: "http://localhost/callback",
-  graphVersion: "v8.0",
+  graphVersion: "v20.0",
+});
+
+OR
+
+// default graphVersion is v20.0
+const facebook = new Facebook({
+  accessToken: "access-token-here"
 });
 
 // step 2: get Facebook oauth login URL using facebook.getLoginUrl()
@@ -96,6 +103,12 @@ app.get("/", function (req, res) {
 });
 
 app.listen(3000);
+```
+
+## Testing
+```bash
+npm install
+npm test
 ```
 
 ## License
