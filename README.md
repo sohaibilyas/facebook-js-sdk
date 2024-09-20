@@ -13,12 +13,6 @@ const express = require("express");
 const Facebook = require("facebook-js-sdk");
 ```
 
-Using **import** keyword.
-```js
-import express from "express";
-import Facebook from "facebook-js-sdk";
-```
-
 ```js
 const app = express();
 
