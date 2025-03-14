@@ -9,9 +9,7 @@ interface FacebookConfig {
   accessToken?: string;
 }
 
-interface FacebookResponse<T> {
-  data: T;
-}
+interface FacebookResponse<T> extends AxiosResponse<T> {}
 
 interface AccessTokenResponse {
   access_token: string;
