@@ -1,127 +1,143 @@
 # Facebook JS SDK
-Simple npm package to interact with Facebook API. This is my first npm package so any feedback is appreciated.
+
+[![npm version](https://badge.fury.io/js/facebook-js-sdk.svg)](https://badge.fury.io/js/facebook-js-sdk)
+[![Build Status](https://github.com/sohaibilyas/facebook-js-sdk/workflows/CI/badge.svg)](https://github.com/sohaibilyas/facebook-js-sdk/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A simple npm package to interact with Facebook API.
+
+## Features
+
+- 🚀 Full TypeScript support
+- 📦 Zero dependencies (except axios)
+- 🔒 OAuth 2.0 authentication
+- 🌐 Facebook Graph API support
+- ✨ Modern ES6+ syntax
+- 📝 Comprehensive type definitions
 
 ## Installation
+
 ```bash
 npm install facebook-js-sdk
 ```
 
 ## Usage
-```js
-const express = require("express");
-const Facebook = require("facebook-js-sdk");
+
+### JavaScript
+
+```javascript
+const Facebook = require('facebook-js-sdk');
+
+const fb = new Facebook({
+  appId: 'your-app-id',
+  appSecret: 'your-app-secret',
+  redirectUrl: 'your-redirect-url'
+});
+
+// Get login URL
+const url = fb.getLoginUrl(['email', 'public_profile']);
+
+// Exchange code for token
+fb.callback('code-from-facebook')
+  .then(response => {
+    fb.setAccessToken(response.data.access_token);
+  });
+
+// Make API calls
+fb.get('/me')
+  .then(response => console.log(response.data));
 ```
 
-```js
-const app = express();
+### TypeScript
 
-// step 1: initialize Facebook class with config or accessToken
+```typescript
+import Facebook from 'facebook-js-sdk';
 
-const facebook = new Facebook({
-  appId: "123456789987654321",
-  appSecret: "123456789abcdefgh987654321",
-  redirectUrl: "http://localhost/callback",
-  graphVersion: "v20.0",
+interface UserProfile {
+  id: string;
+  name: string;
+  email?: string;
+}
+
+const fb = new Facebook({
+  appId: 'your-app-id',
+  appSecret: 'your-app-secret',
+  redirectUrl: 'your-redirect-url'
 });
 
-// default graphVersion is v20.0 and it's optional
-const facebook = new Facebook({
-  graphVersion: "v20.0",
-  accessToken: "access-token-here"
-});
+// Get login URL with type-safe permissions
+const url = fb.getLoginUrl(['email', 'public_profile']);
 
-// step 2: get Facebook oauth login URL using facebook.getLoginUrl()
+// Exchange code for token with type safety
+const response = await fb.callback('code-from-facebook');
+fb.setAccessToken(response.data.access_token);
 
-app.get("/login", function (req, res) {
-  res.send(facebook.getLoginUrl(["email"]));
-});
-
-// step 3: oauth login redirects back to callback page and we send code GET param to facebook.callback() and fetch access_token
-
-app.get("/callback", function (req, res) {
-  if (req.query.code) {
-    facebook
-      .callback(req.query.code)
-      .then((response) => {
-        res.send(response.data.access_token); // store access_token in database for later use
-      })
-      .catch((error) => {
-        res.send(error.response.data);
-      });
-  }
-});
-
-// step 4: use facebook.get() facebook.post() and facebook.delete() for GET, POST and DELETE requests
-
-app.get("/", function (req, res) {
-
-  // fetch access_token from database and set it using facebook.setAccessToken() for all future requests
-  
-  facebook.setAccessToken("user-secret-access-token");
-  
-  facebook
-    .get("/me?fields=id,name")
-    .then((response) => {
-      var name = response.data.name;
-      res.send(name);
-    })
-    .catch((error) => {
-      res.send("not found");
-    });
-    
-  facebook
-    .post(
-      "/page-id-here/feed",
-      {
-        message: "This is post message.",
-      },
-      "page-secert-access-token"
-    )
-    .then((response) => {
-      res.send(response.data);
-    })
-    .catch((error) => {
-      res.send(error.response.data);
-    });
-    
-  facebook
-    .delete("/object-id-here")
-    .then((response) => {
-      res.send(response.data);
-    })
-    .catch((error) => {
-      res.send(error.response.data);
-    });
-});
-
-app.listen(3000);
+// Make API calls with type safety
+const profile = await fb.get<UserProfile>('/me');
+console.log(profile.data.name);
 ```
 
-## Testing
+## API Reference
+
+### Constructor
+
+```typescript
+new Facebook({
+  appId?: string;
+  appSecret?: string;
+  redirectUrl?: string;
+  graphVersion?: string; // defaults to 'v20.0'
+  accessToken?: string;
+})
+```
+
+You must provide either:
+- `accessToken` for direct API access, or
+- `appId`, `appSecret`, and `redirectUrl` for OAuth flow
+
+### Methods
+
+#### `getLoginUrl(permissions: string[]): string`
+Generate a Facebook login URL with the specified permissions.
+
+#### `callback(code: string): Promise<{ access_token: string, ... }>`
+Exchange an OAuth code for an access token.
+
+#### `getAccessToken(): string | undefined`
+Get the current access token.
+
+#### `setAccessToken(accessToken: string): void`
+Set the access token for API calls.
+
+#### `get<T>(path: string, accessToken?: string): Promise<{ data: T }>`
+Make a GET request to the Facebook API.
+
+#### `post<T>(path: string, options: object, accessToken?: string): Promise<{ data: T }>`
+Make a POST request to the Facebook API.
+
+#### `delete<T>(path: string, accessToken?: string): Promise<{ data: T }>`
+Make a DELETE request to the Facebook API.
+
+## Development
+
 ```bash
+# Install dependencies
 npm install
+
+# Run tests
 npm test
+
+# Run linter
+npm run lint
+
+# Build
+npm run build
 ```
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## License
-MIT License
 
-Copyright (c) 2024 Sohaib Ilyas
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
