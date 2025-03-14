@@ -130,7 +130,7 @@ class Facebook {
       throw new Error(`Unsupported method: ${method}`);
     }
 
-    return response.data;
+    return response;
   }
 }
 
