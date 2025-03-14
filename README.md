@@ -6,15 +6,6 @@
 
 A simple npm package to interact with Facebook API.
 
-## Features
-
-- 🚀 Full TypeScript support
-- 📦 Zero dependencies (except axios)
-- 🔒 OAuth 2.0 authentication
-- 🌐 Facebook Graph API support
-- ✨ Modern ES6+ syntax
-- 📝 Comprehensive type definitions
-
 ## Installation
 
 ```bash
