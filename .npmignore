@@ -21,4 +21,4 @@ coverage/
 .idea/
 
 # Test directories
-test-projects/ 
+test/

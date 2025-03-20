@@ -8,8 +8,7 @@ build
 
 # Testing
 coverage
-tester
-test-projects
+test
 
 # IDE and Editor files
 .idea/

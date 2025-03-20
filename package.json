@@ -1,8 +1,9 @@
 {
   "name": "facebook-js-sdk",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "Simple JavaScript/TypeScript SDK to interact with Facebook API",
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
@@ -10,7 +11,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsup",
     "test": "jest",
     "lint": "eslint 'src/**/*.{js,ts}'",
     "lint:fix": "eslint 'src/**/*.{js,ts}' --fix",
@@ -57,6 +58,7 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "ts-jest": "^29.2.6",
+    "tsup": "^8.4.0",
     "typescript": "^5.5.0"
   },
   "lint-staged": {

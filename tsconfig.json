@@ -1,24 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "lib": ["es6", "dom", "es2017"],
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
+    "noImplicitAny": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "removeComments": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "strictNullChecks": true,
+    "target": "ES2022",
+    "moduleResolution": "Node10",
+    "module": "CommonJS",
+    "declaration": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "outDir": "dist"
   },
-  "include": ["src/**/*", "src/**/*.test.ts"],
-  "exclude": ["node_modules", "dist", "test-projects"]
+  "include": ["src"],
+  "exclude": ["node_modules", "test"]
 }

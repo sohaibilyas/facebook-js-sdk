@@ -1,21 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
+export * from './types';
+import axios from 'axios';
 import { createHash } from 'crypto';
-
-interface FacebookConfig {
-  appId?: string;
-  appSecret?: string;
-  redirectUrl?: string;
-  graphVersion?: string;
-  accessToken?: string;
-}
-
-interface FacebookResponse<T> extends AxiosResponse<T> {}
-
-interface AccessTokenResponse {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-}
+import { FacebookConfig, FacebookResponse } from './types';
 
 class Facebook {
   private config: FacebookConfig;
@@ -57,8 +43,8 @@ class Facebook {
     );
   }
 
-  public callback(code: string): Promise<AxiosResponse<AccessTokenResponse>> {
-    return axios.get(`${this.baseUrl}/oauth/access_token`, {
+  public async callback(code: string): Promise<FacebookResponse> {
+    return await axios.get(`${this.baseUrl}/oauth/access_token`, {
       params: {
         client_id: this.config.appId,
         client_secret: this.config.appSecret,
@@ -84,28 +70,28 @@ class Facebook {
     return path.startsWith('/') ? path : '/' + path;
   }
 
-  public async get<T>(path: string, accessToken?: string): Promise<FacebookResponse<T>> {
-    return this.makeRequest<T>('get', path, undefined, accessToken);
+  public async get(path: string, accessToken?: string): Promise<FacebookResponse> {
+    return this.makeRequest('get', path, undefined, accessToken);
   }
 
-  public async post<T>(
+  public async post(
     path: string,
     options: Record<string, unknown>,
     accessToken?: string
-  ): Promise<FacebookResponse<T>> {
-    return this.makeRequest<T>('post', path, options, accessToken);
+  ): Promise<FacebookResponse> {
+    return this.makeRequest('post', path, options, accessToken);
   }
 
-  public async delete<T>(path: string, accessToken?: string): Promise<FacebookResponse<T>> {
-    return this.makeRequest<T>('delete', path, undefined, accessToken);
+  public async delete(path: string, accessToken?: string): Promise<FacebookResponse> {
+    return this.makeRequest('delete', path, undefined, accessToken);
   }
 
-  private async makeRequest<T>(
+  private async makeRequest(
     method: 'get' | 'post' | 'delete',
     path: string,
     options?: Record<string, unknown>,
     accessToken?: string
-  ): Promise<FacebookResponse<T>> {
+  ): Promise<FacebookResponse> {
     const token = accessToken || this.accessToken;
     if (!token) {
       throw new Error('Access token is required');
@@ -132,4 +118,5 @@ class Facebook {
   }
 }
 
-export = Facebook;
+export default Facebook;
+module.exports = Facebook;
